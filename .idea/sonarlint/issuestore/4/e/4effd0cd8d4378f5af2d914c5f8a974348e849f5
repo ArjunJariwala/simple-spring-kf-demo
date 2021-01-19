@@ -1,0 +1,20 @@
+
+g
+java:S2259"GA "NullPointerException" could be thrown; "urlMethod" is nullable here.(Ö ÷ªÿÿÿÿÿ8êêíîï.
+J
+java:S3740"/Provide the parametrized type for this generic.(ÑîÂ‰8úôÇîï.
+°
+java:S4449"”Annotate the parameter with @javax.annotation.Nullable in method 'makeAccessible' declaration, or make sure that null can not be passed as argument.(Ğƒ°‡8êêíîï.
+J
+java:S3740"/Provide the parametrized type for this generic.(ÿ€‚ó8úôÇîï.
+f
+java:S2259"FA "NullPointerException" could be thrown; "urlField" is nullable here.(Éğµˆÿÿÿÿÿ8êêíîï.
+X	java:S106"9Replace this use of System.out or System.err by a logger.(¨¶ÑÍşÿÿÿÿ8ë›™Âï.
+y
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(õÕß±ÿÿÿÿÿ8ë›™Âï.
+J
+java:S3740"/Provide the parametrized type for this generic.(ÑîÂ‰8úôÇîï.
+
+java:S1488"fImmediately return this expression instead of assigning it to the temporary variable "responseEntity".(ÑîÂ‰8úôÇîï.
+µ
+java:S4449"”Annotate the parameter with @javax.annotation.Nullable in method 'makeAccessible' declaration, or make sure that null can not be passed as argument.(¾„áãÿÿÿÿÿ8êêíîï.

@@ -9,24 +9,19 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.app.ApplicationInstanceInfo;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
     @Autowired(required = false) DataSource dataSource;
-    @Autowired(required = false) RedisConnectionFactory redisConnectionFactory;
-    @Autowired(required = false) MongoDbFactory mongoDbFactory;
-    @Autowired(required = false) ConnectionFactory rabbitConnectionFactory;
 
     @Autowired(required = false) ApplicationInstanceInfo instanceInfo;
 
@@ -37,13 +32,24 @@ public class HomeController {
         if (instanceInfo != null) {
             Map<Class<?>, String> services = new LinkedHashMap<Class<?>, String>();
             services.put(dataSource.getClass(), toString(dataSource));
-            services.put(mongoDbFactory.getClass(), toString(mongoDbFactory));
-            services.put(redisConnectionFactory.getClass(), toString(redisConnectionFactory));
-            services.put(rabbitConnectionFactory.getClass(), toString(rabbitConnectionFactory));
             model.addAttribute("services", services.entrySet());
         }
 
         return "home";
+    }
+
+    @GetMapping("/test1")
+    public ResponseEntity getTest()
+    {
+        ResponseEntity responseEntity = new ResponseEntity("Success",HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @GetMapping("/test2")
+    public ResponseEntity getTest1()
+    {
+        ResponseEntity responseEntity = new ResponseEntity("Hi, Good to see you are testing kf",HttpStatus.OK);
+        return responseEntity;
     }
 
     private String toString(DataSource dataSource) {
@@ -63,42 +69,6 @@ public class HomeController {
                     return "<unknown> " + dataSource.getClass();
                 }
             }
-        }
-    }
-
-    private String toString(MongoDbFactory mongoDbFactory) {
-        if (mongoDbFactory == null) {
-            return "<none>";
-        } else {
-            try {
-                return mongoDbFactory.getDb().getMongo().getAddress().toString();
-            } catch (Exception ex) {
-                return "<invalid address> " + mongoDbFactory.getDb().getMongo().toString();
-            }
-        }
-    }
-
-    private String toString(RedisConnectionFactory redisConnectionFactory) {
-        if (redisConnectionFactory == null) {
-            return "<none>";
-        } else {
-            if (redisConnectionFactory instanceof JedisConnectionFactory) {
-                JedisConnectionFactory jcf = (JedisConnectionFactory) redisConnectionFactory;
-                return jcf.getHostName().toString() + ":" + jcf.getPort();
-            } else if (redisConnectionFactory instanceof LettuceConnectionFactory) {
-                LettuceConnectionFactory lcf = (LettuceConnectionFactory) redisConnectionFactory;
-                return lcf.getHostName().toString() + ":" + lcf.getPort();
-            }
-            return "<unknown> " + redisConnectionFactory.getClass();
-        }
-    }
-
-    private String toString(ConnectionFactory rabbitConnectionFactory) {
-        if (rabbitConnectionFactory == null) {
-            return "<none>";
-        } else {
-            return rabbitConnectionFactory.getHost() + ":"
-                    + rabbitConnectionFactory.getPort();
         }
     }
 

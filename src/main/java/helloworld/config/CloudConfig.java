@@ -1,4 +1,4 @@
-package helloworld;
+package helloworld.config;
 
 import org.springframework.cloud.app.ApplicationInstanceInfo;
 import org.springframework.cloud.config.java.AbstractCloudConfig;

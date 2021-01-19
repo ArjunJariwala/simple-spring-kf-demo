@@ -2,5 +2,17 @@
 applications:
 - name: hello-spring-cloud
   instances: 1
-  host: hello-spring-cloud-${random-word}
   path: target/hello-spring-cloud-0.0.1.BUILD-SNAPSHOT.jar
+  stack: cflinuxfs3
+  buildpacks:
+    - java_buildpack
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '{ "jre": { version: 11.+ } }'
+    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
+
+
+
+
+
+
+

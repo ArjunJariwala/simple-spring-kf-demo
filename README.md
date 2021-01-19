@@ -59,3 +59,4 @@ $ cf restart
 ~~~
 
 Consult the [Pivotal Cloud Foundry documentation](http://docs.pivotal.io/) for more details.
+# simple-spring-kf-demo

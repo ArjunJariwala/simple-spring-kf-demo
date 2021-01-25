@@ -1,0 +1,56 @@
+##################################################################################################
+# Spring Cloud service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-spring-cloud
+  namespace: simple-spring-cloud
+  labels:
+    app: simple-spring-cloud
+    service: simple-spring-cloud
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: details
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: simple-spring-cloud
+  namespace: simple-spring-cloud
+  labels:
+    account: simple-spring-cloud
+  annotations:
+    iam.gke.io/gcp-service-account: simple-spring-cloud@${PROJECT_ID}.iam.gserviceaccount.com
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-spring-cloud-v1
+  namespace: simple-spring-cloud
+  labels:
+    app: simple-spring-cloud
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-spring-cloud
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: simple-spring-cloud
+        version: v1
+    spec:
+      serviceAccountName: simple-spring-cloud
+      containers:
+      - name: simple-spring-cloud
+        image: <image link>
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+---

@@ -1,14 +1,5 @@
 package helloworld;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.app.ApplicationInstanceInfo;
 import org.springframework.http.HttpStatus;
@@ -19,11 +10,22 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.sql.DataSource;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Controller
 public class HomeController {
-    @Autowired(required = false) DataSource dataSource;
+    @Autowired(required = false)
+    DataSource dataSource;
 
-    @Autowired(required = false) ApplicationInstanceInfo instanceInfo;
+    @Autowired(required = false)
+    ApplicationInstanceInfo instanceInfo;
+
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -38,17 +40,10 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/test1")
-    public ResponseEntity getTest()
-    {
-        ResponseEntity responseEntity = new ResponseEntity("Success",HttpStatus.OK);
-        return responseEntity;
-    }
 
-    @GetMapping("/test2")
-    public ResponseEntity getTest1()
-    {
-        ResponseEntity responseEntity = new ResponseEntity("Hi, Good to see you are testing kf",HttpStatus.OK);
+    @GetMapping("/test")
+    public ResponseEntity<String> getTest1() {
+        ResponseEntity responseEntity = new ResponseEntity("Hi, Good to see you are testing kf", HttpStatus.OK);
         return responseEntity;
     }
 
@@ -64,8 +59,8 @@ public class HomeController {
                 try {
                     Method urlMethod = ReflectionUtils.findMethod(dataSource.getClass(), "getUrl");
                     ReflectionUtils.makeAccessible(urlMethod);
-                    return stripCredentials((String) urlMethod.invoke(dataSource, (Object[])null));
-                } catch (Exception me){
+                    return stripCredentials((String) urlMethod.invoke(dataSource, (Object[]) null));
+                } catch (Exception me) {
                     return "<unknown> " + dataSource.getClass();
                 }
             }
@@ -79,8 +74,7 @@ public class HomeController {
             }
             URI url = new URI(urlString);
             return new URI(url.getScheme(), null, url.getHost(), url.getPort(), url.getPath(), null, null).toString();
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             System.out.println(e);
             return "<bad url> " + urlString;
         }

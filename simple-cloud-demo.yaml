@@ -14,7 +14,7 @@ spec:
   - port: 9080
     name: http
   selector:
-    app: details
+    app: simple-spring-cloud
 ---
 apiVersion: v1
 kind: ServiceAccount
